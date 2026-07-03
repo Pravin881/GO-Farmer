@@ -1,24 +1,30 @@
 <?php
 
-$host = "localhost";
-$dbname = "go_farmer";
-$username = "root";
-$password = "";
+class Database
+{
+    private $host = "localhost";
+    private $dbname = "go_farmer";
+    private $username = "root";
+    private $password = "";
 
-try {
+    public function connect()
+    {
+        try {
 
-    $pdo = new PDO(
-        "mysql:host=$host;dbname=$dbname;charset=utf8mb4",
-        $username,
-        $password
-    );
+            $connection = new PDO(
+                "mysql:host={$this->host};dbname={$this->dbname};charset=utf8mb4",
+                $this->username,
+                $this->password
+            );
 
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-} catch (PDOException $e) {
+            return $connection;
 
-    die("Database Connection Failed: " . $e->getMessage());
+        } catch (PDOException $e) {
 
+            die("Database Connection Failed : " . $e->getMessage());
+
+        }
+    }
 }
-
-?>
